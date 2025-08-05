@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputMaster",
     "maps": [
         {
@@ -15,13 +16,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
-                    "type": "Button",
+                    "name": "Action",
+                    "type": "Value",
                     "id": "66fd83f5-56a8-4593-9a2b-a592323198ff",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Jump",
@@ -107,7 +108,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2904496a-a574-4c3a-925a-3cc4bc67d849",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

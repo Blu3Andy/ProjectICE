@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigidbody;
     private Transform mainCamera;
 
-    [SerializeField] GameObject primaryItem;
+    [SerializeField] GameObject gadget;
 
     [SerializeField] private Transform anker;
 
@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 200f;
     [SerializeField] private float dash = 3f;
     [SerializeField] private float dashCooldown = 2f;
+
+    private bool isPresingAction = false;
    
     void Awake()
     {
@@ -40,24 +42,26 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Movement.performed += OnMove;
         playerInput.Player.Movement.canceled += OnMove;
 
-        playerInput.Player.Attack.started += i => Attack();
+        playerInput.Player.Action.started += i => Action();
+        playerInput.Player.Action.canceled +=  i => ActionEnd();
 
         playerInput.Player.Jump.started += i => Jump();
     }
 
     void Update()
     {
-        if(moveInput != Vector2.zero)//########################
+        if (moveInput != Vector2.zero)//########################
         {
             Movement(speed);
         }
+        
+        if(isPresingAction) gadget.GetComponent<SphereCollider>().enabled = true;
+
+        if(isPresingAction) gadget.GetComponent<Vacuum>().SuckIn();
     }
 
     private void Movement(float speed)
     {
-
-
-
         // var relative = (transform.position + camRelMovement) - transform.position;
         // var rot = Quaternion.LookRotation(relative, Vector3.up);
 
@@ -77,16 +81,22 @@ public class PlayerController : MonoBehaviour
         rigidbody.AddForce(new Vector3(0,jumpForce,0));
     }
 
-    private void Attack()
+    public void Action()
     {
-        
+        isPresingAction = true;
+    }
+
+    private void ActionEnd()
+    {
+        isPresingAction = false;
+        gadget.GetComponent<Vacuum>().stopSuckIn();
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
 
-        movement = new Vector3(moveInput.x, 0 , moveInput.y);
+        movement = new Vector3(moveInput.x, 0, moveInput.y);
         movement = movement.normalized;
 
         var matrix = Matrix4x4.Rotate(anker.rotation);
