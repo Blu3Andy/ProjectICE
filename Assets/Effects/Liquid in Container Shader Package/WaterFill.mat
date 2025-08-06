@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material
+  m_Name: WaterFill
   m_Shader: {fileID: -6465566751694194690, guid: f3220fb75ed6875489759241481dd1c5,
     type: 3}
   m_Parent: {fileID: 0}
@@ -109,7 +109,7 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Fill: 0.546
+    - _Fill: 0.53333336
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

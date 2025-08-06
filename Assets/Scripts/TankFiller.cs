@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TankFiller : MonoBehaviour
+{
+    [SerializeField] private Material waterMat;
+
+    [SerializeField] private float tankMaxVolume = 30f;
+    [SerializeField] private float tankActualVolume = 0f;
+
+    private float materialValue;
+
+    private void Start()
+    {
+        waterMat = GetComponent<Renderer>().material;
+    }
+
+
+    public void FillTank(GameObject adder)
+    {
+        if (adder.name == "IceRubble_S")
+        {
+            tankActualVolume += 2f;
+
+        }
+    }
+
+    private void Update()
+    {
+        updateFillAmount();
+
+    }
+
+    private void updateFillAmount()
+    {
+        materialValue = tankActualVolume / tankMaxVolume;
+        print(materialValue);
+        waterMat.SetFloat("_Fill", materialValue);
+    }
+
+}
