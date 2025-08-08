@@ -10,7 +10,7 @@ public class Drill : MonoBehaviour
 
     [SerializeField] private Transform drillHead;
 
-    [SerializeField] private float drillRange = 3f;
+    [SerializeField] private float drillRange = 1f;
  
     // Start is called before the first frame update
     void Start()
@@ -28,13 +28,13 @@ public class Drill : MonoBehaviour
         if (Physics.Raycast(rayStart.position, rayStart.TransformDirection(Vector3.up), out hit, drillRange, hittable))
         {
             Debug.DrawRay(rayStart.position, rayStart.up * hit.distance, Color.red);
-            Debug.Log("Did Hit");
+            
             drillHead.position = hit.point;
         }
         else
         {
             Debug.DrawRay(rayStart.position, rayStart.TransformDirection(Vector3.up) * drillRange, Color.white);
-            Debug.Log("Did not Hit");
+            
         }
     }
 }

@@ -34,7 +34,6 @@ public class TankFiller : MonoBehaviour
     private void updateFillAmount()
     {
         materialValue = tankActualVolume / tankMaxVolume;
-        print(materialValue);
         waterMat.SetFloat("_Fill", materialValue);
     }
 
