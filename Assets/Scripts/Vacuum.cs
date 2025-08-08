@@ -12,18 +12,6 @@ public class Vacuum : MonoBehaviour
     [SerializeField] private Transform vaccumHole;
     [SerializeField] private SphereCollider sphereCollider;
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     GameObject Object = other.gameObject;
-
-    //     if (Object.tag == "Ice" && !inSuckPool.Contains(Object))
-    //     {
-    //         print(Object);
-    //         suckPool.Add(Object);
-    //         inSuckPool.Add(Object);
-    //     }
-    // }
-
     public void SuckIn()
     {
         print("is vacuuming");

@@ -19,10 +19,9 @@ public class TankFiller : MonoBehaviour
 
     public void FillTank(GameObject adder)
     {
-        if (adder.name == "IceRubble_S")
+        if (adder.CompareTag("Ice"))
         {
             tankActualVolume += 2f;
-
         }
     }
 

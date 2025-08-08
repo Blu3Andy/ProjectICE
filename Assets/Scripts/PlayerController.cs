@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Action.canceled +=  i => ActionEnd();
 
         playerInput.Player.Jump.started += i => Jump();
+
+        Cursor.visible = false;
     }
 
     void Update()
