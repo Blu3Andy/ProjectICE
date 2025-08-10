@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 200f;
     [SerializeField] private float dash = 3f;
     [SerializeField] private float dashCooldown = 2f;
+     int start = 0;
 
     private bool isPresingAction = false;
    
@@ -46,6 +47,8 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Action.canceled +=  i => ActionEnd();
 
         playerInput.Player.Jump.started += i => Jump();
+
+        playerInput.Player.Scroll.started += Scroll;
 
         Cursor.visible = false;
     }
@@ -108,9 +111,36 @@ public class PlayerController : MonoBehaviour
         camRelMovement = matrix.MultiplyPoint3x4(movement);
     }
 
-    private void liftUp(float amount, float speed)
+    private void Scroll(InputAction.CallbackContext context)
     {
-        transform.position += new Vector3(0,amount,0)* speed * Time.deltaTime;
+        float scrollDir = context.ReadValue<Vector2>().y;
+
+        int hotbarSize = 2;
+
+        print(start);
+        if (scrollDir > 0)
+        {
+            if (start < hotbarSize)
+            {
+                start++;
+            }
+            else
+            {
+                start = 0;
+            }
+        }
+        if (scrollDir < 0)
+        {
+            if (start <= 0)
+            {
+                start = hotbarSize;
+            }
+            else
+            {
+                start--;
+            }
+        }
+        
     }
 
     private void OnCollisionEnter(Collision col)
