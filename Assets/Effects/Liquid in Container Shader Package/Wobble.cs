@@ -5,6 +5,9 @@ using UnityEngine;
 public class Wobble : MonoBehaviour
 {
     Renderer rend;
+
+    [SerializeField] private GravityBody body;
+
     Vector3 lastPos;
     Vector3 velocity;
     Vector3 lastRot;  
@@ -18,7 +21,7 @@ public class Wobble : MonoBehaviour
     float wobbleAmountToAddZ;
     float pulse;
     float time = 0.5f;
-    
+
     // Use this for initialization
     void Start()
     {
@@ -39,6 +42,7 @@ public class Wobble : MonoBehaviour
         // send it to the shader
         rend.material.SetFloat("_WobbleX", wobbleAmountX);
         rend.material.SetFloat("_WobbleZ", wobbleAmountZ);
+        // rend.material.SetVector("_Gravity", body.GravityDirection);
 
         // velocity
         velocity = (lastPos - transform.position) / Time.deltaTime;

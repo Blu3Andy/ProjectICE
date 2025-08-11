@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3783439736895437313}
   - component: {fileID: 6944660225213711481}
   - component: {fileID: 1065315144796626512}
+  - component: {fileID: -4522652100456911247}
   m_Layer: 0
   m_Name: IceRubble_S
   m_TagString: Ice
@@ -128,8 +129,20 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-4522652100456911247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2839185238016361261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb7647402d37b5419211c1f1ae172d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

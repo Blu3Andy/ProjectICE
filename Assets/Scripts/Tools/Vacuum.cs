@@ -4,7 +4,7 @@ using System.Xml;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class Vacuum : MonoBehaviour
+public class Vacuum : Tool
 {
     private List<GameObject> suckPool = new List<GameObject>();
     private HashSet<GameObject> inSuckPool = new HashSet<GameObject>();
@@ -12,9 +12,9 @@ public class Vacuum : MonoBehaviour
     [SerializeField] private Transform vaccumHole;
     [SerializeField] private SphereCollider sphereCollider;
 
-    public void SuckIn()
+    public override void Execute()
     {
-        print("is vacuuming");
+        sphereCollider.enabled = true;
         CheckObjectsInSphere();
         foreach (GameObject rubble in suckPool)
         {
@@ -22,8 +22,9 @@ public class Vacuum : MonoBehaviour
         }
     }
 
-    public void stopSuckIn()
+    public override void Stop()
     {
+        sphereCollider.enabled = false;
         suckPool.Clear();
         inSuckPool.Clear();
     }

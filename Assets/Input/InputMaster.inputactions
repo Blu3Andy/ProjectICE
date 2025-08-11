@@ -41,6 +41,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "CamRotation",
+                    "type": "Value",
+                    "id": "d6f94dc9-17cf-43d3-bb0c-7f22312f679c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -208,6 +217,17 @@
                     "action": "Scroll",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "46ea19c3-068c-49b4-a4a0-7a57a12c3e7b",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

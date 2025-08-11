@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine. InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -18,7 +19,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool lookAtAnker = true;
 
     private Vector3 movement;
-    private Vector3 camRelMovement;
 
     private Vector2 moveInput;
 
@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
      int start = 0;
 
     private bool isPresingAction = false;
+
+    [SerializeField] private GameObject[] tools;
    
     void Awake()
     {
@@ -59,26 +61,23 @@ public class PlayerController : MonoBehaviour
         {
             Movement(speed);
         }
-        
-        if(isPresingAction) gadget.GetComponent<SphereCollider>().enabled = true;
 
-        if(isPresingAction) gadget.GetComponent<Vacuum>().SuckIn();
+        if (isPresingAction) tools[start].GetComponent<Tool>()?.Execute();
+
+        if (!isPresingAction) tools[start].GetComponent<Tool>()?.Stop();
+
+        Debug.DrawLine(transform.position, transform.position + (transform.forward * movement.z + transform.right * movement.x));
+        Debug.DrawLine(transform.position, transform.position + transform.up * 3);
+
+        print(Vector3.Angle(transform.position + (transform.forward * movement.z + transform.right * movement.x), transform.up));
     }
 
     private void Movement(float speed)
     {
-        // var relative = (transform.position + camRelMovement) - transform.position;
-        // var rot = Quaternion.LookRotation(relative, Vector3.up);
+       
 
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotSpeed * Time.deltaTime);
+        transform.position += speed * Time.deltaTime * (transform.forward * movement.z + transform.right * movement.x);
 
-        float targetAngle = Mathf.Atan2(moveInput.x, moveInput.y) * Mathf.Rad2Deg + mainCamera.eulerAngles.y + movement.y;
-        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotSpeed, 0.1f);
-        transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
-
-        Vector3 moveDir = Quaternion.Euler(0f, smoothAngle, 0f) * Vector3.forward;
-         
-          transform.position += moveDir * speed * Time.deltaTime;
     }
 
     private void Jump()
@@ -94,7 +93,6 @@ public class PlayerController : MonoBehaviour
     private void ActionEnd()
     {
         isPresingAction = false;
-        gadget.GetComponent<Vacuum>().stopSuckIn();
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -104,50 +102,51 @@ public class PlayerController : MonoBehaviour
         movement = new Vector3(moveInput.x, 0, moveInput.y);
         movement = movement.normalized;
 
-        var matrix = Matrix4x4.Rotate(anker.rotation);
-
-        if (!lookAtAnker) matrix = Matrix4x4.Rotate(transform.rotation);
-
-        camRelMovement = matrix.MultiplyPoint3x4(movement);
     }
 
     private void Scroll(InputAction.CallbackContext context)
     {
         float scrollDir = context.ReadValue<Vector2>().y;
 
-        int hotbarSize = 2;
+        int hotbarSize = tools.Length-1;
+
+        if (scrollDir < 0 && start == 0)
+        {
+            start = hotbarSize;
+            tools[start].SetActive(true);
+            tools[0].SetActive(false);
+        }
+        else if (scrollDir < 0)
+        {
+            start--;
+            tools[start].SetActive(true);
+            tools[start + 1].SetActive(false);
+        }
+
+        if (scrollDir > 0 && start == hotbarSize)
+        {
+            start = 0;
+
+            tools[start].SetActive(true);
+            tools[hotbarSize].SetActive(false);
+        }
+        else if (scrollDir > 0)
+        {
+            start++;
+            
+            tools[start].SetActive(true);
+            tools[start - 1].SetActive(false);
+        }
 
         print(start);
-        if (scrollDir > 0)
-        {
-            if (start < hotbarSize)
-            {
-                start++;
-            }
-            else
-            {
-                start = 0;
-            }
-        }
-        if (scrollDir < 0)
-        {
-            if (start <= 0)
-            {
-                start = hotbarSize;
-            }
-            else
-            {
-                start--;
-            }
-        }
         
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "ground")
-        {
-        }
+        // if(col.gameObject.CompareTag("ground"))
+        // {
+        // }
     }
 
     void OnEnable()
